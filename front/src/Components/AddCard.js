@@ -11,8 +11,6 @@ export default function AddCard() {
 
   const dispatch = useDispatch();
 
-  console.log(cardSelected[0].image_uris.normal, "<== Last Card Selected");
-
   const handleInputTranslate = (e) => {
     if (e.target.classList.contains("addCard__translateinput")) {
       const newCardState = {
@@ -69,39 +67,41 @@ export default function AddCard() {
             </button>
           </form>
           <div>
-            <div className="addCard__addresult">
-              <h1 className="addCard__addresultTitle">
-                {cardSelected[0].printed_name
-                  ? cardSelected[0].printed_name
-                  : ""}
-              </h1>
-              <img
-                src={
-                  cardSelected[0].image_uris.normal
-                    ? cardSelected[0].image_uris.normal
-                    : "#"
-                }
-                alt="Image de la carte"
-                className="addCard__addresultImg"
-              />
-              <p className="addCard__addresultDescription">
-                {cardSelected[0].printed_text
-                  ? cardSelected[0].printed_text
-                  : cardSelected[0].oracle_text
-                  ? cardSelected[0].oracle_text
-                  : ""}
-              </p>
-              <p className="addCard__addresultPrice">
-                {cardSelected[0].prices.eur
-                  ? cardSelected[0].prices.eur + " €"
-                  : "Prix non disponible."}
-              </p>
-              <div className="addCard__addCollectionDiv">
-                <button className="addCard__addCollectionBtn">
-                  Add to collection
-                </button>
+            {cardSelected[0] != null ? (
+              <div className="addCard__addresult">
+                <h1 className="addCard__addresultTitle">
+                  {cardSelected[0].printed_name
+                    ? cardSelected[0].printed_name
+                    : cardSelected[0].name
+                    ? cardSelected[0].name
+                    : ""}
+                </h1>
+                <img
+                  src={cardSelected[0].image_uris.normal}
+                  alt="Image de la carte"
+                  className="addCard__addresultImg"
+                />
+                <p className="addCard__addresultDescription">
+                  {cardSelected[0].printed_text
+                    ? cardSelected[0].printed_text
+                    : cardSelected[0].oracle_text
+                    ? cardSelected[0].oracle_text
+                    : ""}
+                </p>
+                <p className="addCard__addresultPrice">
+                  {cardSelected[0].prices.eur
+                    ? cardSelected[0].prices.eur + " €"
+                    : "Prix non disponible."}
+                </p>
+                <div className="addCard__addCollectionDiv">
+                  <button className="addCard__addCollectionBtn">
+                    Add to collection
+                  </button>
+                </div>
               </div>
-            </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
 
