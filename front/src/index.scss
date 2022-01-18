@@ -158,13 +158,13 @@ a {
 }
 
 .addCard {
-    width: 80%;
+    width: 90%;
     height: auto;
     text-align: center;
     margin: auto;
-    margin-top: 5rem;
+    margin-top: 3rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
     &__translateBox {
@@ -206,63 +206,117 @@ a {
         width: 100%;
         height: auto;
         padding: 2rem;
+        padding-top: 0rem;
     }
     &__addform {
-        background: rgb(206, 162, 162);
         border-radius: 13px;
-        height: 9rem;
+        height: auto;
         display: flex;
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: flex-start;
     }
     &__addlabel {
-        width: 20%;
+        width: 100%;
         font-family: 'Montserrat', sans-serif;
-        font-size: 17px;
-        font-weight: 500;
+        font-size: 30px;
+        font-weight: 600;
         margin-top: 1rem;
-        margin-bottom: 1rem;
+        margin-bottom: .4rem;
+        text-align: left;
+    }
+    &__adddiv {
+        width: 40%;
+        height: 3rem;
+        display: flex;
+        flex-direction: row;
+        position: relative;
+        border-radius: 13px;
+        &:hover {
+            box-shadow: #333 1px 2px 2px;
+        }
     }
     &__addinput {
-        width: 40%;
-        height: 2rem;
-        margin-right: 1rem;
+        width: 90%;
+        height: auto;
         font-family: 'Montserrat', sans-serif;
         text-align: center;
+        border: none;
+        border: 1.3px solid #333;
+        border-radius: 13px 0 0 13px;
+        font-size: 1.8rem;
+        background: transparent;
+        &:focus {
+            outline: none;
+        }
     }
     &__addbtn {
-        margin-top: .5rem;
-        padding: .4rem;
+        width: 10%;
+        height: auto;
         font-family: 'Montserrat', sans-serif;
+        border: 1.3px solid #333;
+        border-left: none;
+        border-radius: 0 13px 13px 0;
 
+        &:hover {
+            cursor: pointer;
+        }
     }
+    &__addbtnLogo {
+        width: 45%;
+    }
+
     &__addresult {
         padding-top: .5rem;
-        margin-top: .5rem;
+        margin-top: 1.5rem;
         width: 100%;
-        border-radius: 13px;
-        background: rgb(153, 201, 157);
+        height: auto;
         font-family: 'Montserrat', sans-serif;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        border: rgb(0, 0, 0) 1px solid;
+        border-radius: 13px;
+        box-shadow: #333 2px 3px 3px;
+    }
+    &__addresultDiv {
+        display: flex;
+        flex-direction: column;
+        width: 45%;
+        height: auto;
+        margin-top: 10%;
+        margin-bottom: auto;
     }
     &__addresultTitle {
-        margin-bottom: .8rem;
+        margin-bottom: 1.8rem;
+        margin-top: -2.5rem;
+        width: 100%;
+        text-align: center;
+        font-family: "Inspiration", sans-serif;
+        font-size: 55px;
     }
     &__addresultImg {
-        width: 40%;
+        width: 30%;
         height: auto;
         border-radius: 20px;
         box-shadow: #333 2px 3px 3px;
+        margin-bottom: 3rem;
+        margin-top: 2rem;
     }
     &__addresultDescription {
         font-size: 17px;
         margin-top: .8rem;
     }
     &__addresultPrice {
-        margin-top: .8rem;
-        padding-bottom: .8rem;
+        margin-top: 1.8rem;
+        font-size: 40px;
+        font-weight: 500;
     }
     &__addCollectionDiv {
         padding-bottom: .8rem;
+        margin-top: 3rem;
     }
     &__addCollectionBtn {
         width: 40%;
@@ -270,5 +324,8 @@ a {
         margin-right: 1rem;
         font-family: 'Montserrat', sans-serif;
         text-align: center;
+        &:hover {
+            cursor: pointer;
+        }
     }
 }

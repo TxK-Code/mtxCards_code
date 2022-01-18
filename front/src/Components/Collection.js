@@ -1,6 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { allCards } from "../redux/actions/post.action";
 
 export default function Collection() {
+  const { cardSelected } = useSelector((state) => state.cardSelectedReducer);
+  const { allCardsList } = useSelector(
+    (state) => state.allCardsSelectedReducer
+  );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(allCards());
+    console.log("Card Updated");
+  }, []);
+
   return (
     <>
       <div className="collection">
@@ -17,7 +31,22 @@ export default function Collection() {
             <li className="collection__sorted collection__sortedLast">Blue</li>
           </ul>
         </div>
-        <div className="collection__rightPanel"></div>
+        <div className="collection__rightPanel">
+          {allCardsList[0] ? (
+            allCardsList[0].map((element) => {
+              return (
+                <>
+                  <div className="olaa">
+                    <h1>{element.cardName}</h1>
+                    <h2>{element.cardId}</h2>
+                  </div>
+                </>
+              );
+            })
+          ) : (
+            <p>Nique</p>
+          )}
+        </div>
       </div>
     </>
   );
