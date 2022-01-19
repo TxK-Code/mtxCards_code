@@ -3,6 +3,7 @@ import Navbar from "./Components/NavBar/Navbar";
 import Index from "./Components/Index";
 import Collection from "./Components/Collection";
 import AddCard from "./Components/AddCard";
+import Login from "./Components/Login";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -12,7 +13,8 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Index />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/index" element={<Index />} />
           <Route path="/collection" element={<Collection />} />
           <Route path="/addcard" element={<AddCard />} />
         </Routes>

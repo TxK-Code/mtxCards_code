@@ -11,7 +11,7 @@ export default function Navbar() {
         <div className="navbar__linksbox">
           <ul className="navbar__links">
             <li className="navbar__onelink navbar__onelinkFirst">
-              <Link to="/">Home</Link>
+              <Link to="/index">Home</Link>
             </li>
             <li className="navbar__onelink">
               <Link to="/collection">Collection</Link>

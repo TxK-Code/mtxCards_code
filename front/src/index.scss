@@ -155,6 +155,32 @@ a {
     &__sortedFirst {
         border-top: 2px solid #333;
     }
+    &__rightPanel {
+        width: 90%;
+        height: auto;
+        margin-left: 10.1%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        align-content: flex-start;
+        padding-left: 3px;
+        padding-top: 3px;
+    }
+    &__show {
+        margin-right: 3px;
+        margin-bottom: 3px;
+        height: 204px;
+    }
+    &__showImg {
+        border-radius: 6px;
+        transition: all 200ms ease-in-out;
+        &:hover {
+            transform: scale(1.5);
+            cursor: pointer;
+            box-shadow: #333 2px 3px 3px;
+        }
+    }
 }
 
 .addCard {
@@ -329,3 +355,46 @@ a {
         }
     }
 }
+
+.login {
+    margin: auto;
+    margin-top: 10%;
+    width: 40%;
+    height: auto;
+    padding: 2.3rem;
+    border: #333 1px solid;
+    &__form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+    &__label {
+        margin-bottom: .3rem;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+        font-size: 1.3rem;;
+    }
+    &__input {
+        margin-bottom: .4rem;
+        height: 2.3rem;
+        border-radius: none;
+        padding-left: .5rem;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.3rem;
+        &:focus {
+            outline: none;
+        }
+    }
+    &__btn {
+        margin: auto;
+        margin-top: 1.8rem;
+        width: 25%;
+        height: 3rem;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.3rem;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+

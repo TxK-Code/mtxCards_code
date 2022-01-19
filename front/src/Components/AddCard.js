@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getCard, allCards } from "../redux/actions/post.action";
+import { getCard, allCards, cardToDb } from "../redux/actions/post.action";
 
 import searchLogo from "../Images/.svg/search-solid.svg";
 
@@ -17,7 +17,7 @@ export default function AddCard() {
 
   useEffect(() => {
     console.log("Card Updated");
-  }, [card]);
+  }, []);
 
   const dispatch = useDispatch();
 
@@ -44,7 +44,7 @@ export default function AddCard() {
 
   const handleAddCollection = (e) => {
     e.preventDefault();
-    dispatch(allCards(card));
+    dispatch(cardToDb(cardSelected[0]));
   };
 
   return (

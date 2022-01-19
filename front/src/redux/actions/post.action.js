@@ -26,3 +26,30 @@ export const allCards = (data) => {
       .catch((err) => console.log(err));
   };
 };
+
+export const cardToDb = (data) => {
+  return (dispatch) => {
+    return axios
+      .post("http://localhost:3001/api/cardToDb", data)
+      .then((res) => {
+        console.log(res.data, "<== RES card to DB");
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const checkLoginInfos = (data) => {
+  return (dispatch) => {
+    return axios
+      .post("http://localhost:3001/api/checkLoginInfos", data)
+      .then((res) => {
+        console.log(res, "<== RES check Login Infos");
+        if (res.status === 200) {
+          console.log("Ok Connection", res);
+        } else {
+          alert("User not found");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+};
