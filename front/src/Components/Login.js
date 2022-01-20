@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { checkLoginInfos } from "../redux/actions/post.action";
 
+import ModalSignUp from "../Components/Modal/ModalSignUp";
+
 export default function Login() {
   const [loginData, setLoginData] = useState({
     userName: "",
@@ -37,29 +39,56 @@ export default function Login() {
     dispatch(checkLoginInfos(loginData));
   };
 
+  const [modalSignUp, setModalSignUp] = useState(false);
+
+  const toggleModalSignUp = () => {
+    setModalSignUp(!modalSignUp);
+  };
+
+  const handleModalSignUp = (e) => {
+    e.preventDefault();
+    setModalSignUp(!modalSignUp);
+  };
+
   return (
     <>
-      <div className="login">
-        <form action="" className="login__form" onSubmit={sendLoginInfos}>
-          <label htmlFor="" className="login__label">
-            Username
-          </label>
-          <input
-            type="text"
-            className="login__input  userName"
-            onChange={handleLogin}
-          />
-          <label htmlFor="" className="login__label">
-            Password
-          </label>
-          <input
-            type="password"
-            className="login__input userPass"
-            onChange={handlePass}
-          />
-          <button className="login__btn">Login</button>
-        </form>
-      </div>
+      {modalSignUp === false ? (
+        <div className="login">
+          <form action="" className="login__form" onSubmit={sendLoginInfos}>
+            <label htmlFor="username" className="login__label">
+              Username
+            </label>
+            <input
+              type="text"
+              className="login__input  userName"
+              onChange={handleLogin}
+              id="username"
+            />
+            <label htmlFor="password" className="login__label">
+              Password
+            </label>
+            <input
+              type="password"
+              className="login__input userPass"
+              onChange={handlePass}
+              id="password"
+            />
+            <button className="login__btn" type="submit">
+              Login
+            </button>
+            <button
+              className="login__btnCreate"
+              type="button"
+              onClick={handleModalSignUp}
+            >
+              Create account
+            </button>
+          </form>
+        </div>
+      ) : (
+        ""
+      )}
+      {modalSignUp && <ModalSignUp onCancel={() => toggleModalSignUp()} />}
     </>
   );
 }

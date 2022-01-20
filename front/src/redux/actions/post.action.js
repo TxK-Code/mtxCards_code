@@ -44,12 +44,23 @@ export const checkLoginInfos = (data) => {
       .post("http://localhost:3001/api/checkLoginInfos", data)
       .then((res) => {
         console.log(res, "<== RES check Login Infos");
-        if (res.status === 200) {
-          console.log("Ok Connection", res);
-        } else {
-          alert("User not found");
-        }
       })
       .catch((err) => console.log(err));
+  };
+};
+
+export const addNewUser = (data) => {
+  return (dispatch) => {
+    return axios
+      .post("http://localhost:3001/api/addNewUser", data)
+      .then((res) => {
+        console.log(res, "<== RES check SignIn Infos");
+        if (res.status === 200) {
+          alert("User added successfully");
+        }
+        if (res.status === 204) {
+          alert("User already exist");
+        }
+      });
   };
 };
