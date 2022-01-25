@@ -6,18 +6,19 @@ import searchLogo from "../Images/.svg/search-solid.svg";
 
 export default function AddCard() {
   const { cardSelected } = useSelector((state) => state.cardSelectedReducer);
-  const { allCardsList } = useSelector(
-    (state) => state.allCardsSelectedReducer
-  );
+  const { userLogged } = useSelector((state) => state.userLoggedNow);
+
+  const userLS = localStorage.getItem("user");
 
   const [card, setCard] = useState({
     cardId: "",
     nameInput: "",
+    userToken: userLS,
   });
 
   useEffect(() => {
     console.log("Card Updated");
-  }, []);
+  }, [card]);
 
   const dispatch = useDispatch();
 
@@ -37,14 +38,20 @@ export default function AddCard() {
     const uploadedCard = {
       ...card,
       cardId: cardSelected[0].id,
+      userToken: userLS,
     };
     console.log(uploadedCard);
     setCard(uploadedCard);
   };
 
+  const cardToSendArray = {
+    card: cardSelected[0],
+    token: userLS,
+  };
+
   const handleAddCollection = (e) => {
     e.preventDefault();
-    dispatch(cardToDb(cardSelected[0]));
+    dispatch(cardToDb(cardToSendArray));
   };
 
   return (

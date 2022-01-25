@@ -1,16 +1,29 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import { checkLoginInfos } from "../redux/actions/post.action";
 
 import ModalSignUp from "../Components/Modal/ModalSignUp";
 
 export default function Login() {
+  const { userLogged } = useSelector((state) => state.userLoggedNow);
+
   const [loginData, setLoginData] = useState({
     userName: "",
     userPassword: "",
   });
 
   const dispatch = useDispatch();
+  const history = useNavigate();
+
+  useEffect(() => {
+    console.log(userLogged);
+    if (userLogged[0]) {
+      localStorage.setItem("user", JSON.stringify(userLogged[0]));
+      history("/index");
+    }
+  }, [userLogged]);
 
   const handleLogin = (e) => {
     if (e.target.classList.contains("userName")) {

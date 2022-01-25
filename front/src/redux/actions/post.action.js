@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const getCard = (props, data) => {
   return (dispatch) => {
+    console.log(props);
     return axios
       .get(
         `https://api.scryfall.com/cards/named?fuzzy=${props.nameInput}`,
@@ -29,6 +30,9 @@ export const allCards = (data) => {
 
 export const cardToDb = (data) => {
   return (dispatch) => {
+    console.log("");
+    console.log(data);
+    console.log("");
     return axios
       .post("http://localhost:3001/api/cardToDb", data)
       .then((res) => {
@@ -44,6 +48,9 @@ export const checkLoginInfos = (data) => {
       .post("http://localhost:3001/api/checkLoginInfos", data)
       .then((res) => {
         console.log(res, "<== RES check Login Infos");
+        if (res.status === 200) {
+          dispatch({ type: "USER_LOG", payload: res.data });
+        }
       })
       .catch((err) => console.log(err));
   };
