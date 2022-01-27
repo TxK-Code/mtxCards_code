@@ -2,7 +2,6 @@ import axios from "axios";
 
 export const getCard = (props, data) => {
   return (dispatch) => {
-    console.log(props);
     return axios
       .get(
         `https://api.scryfall.com/cards/named?fuzzy=${props.nameInput}`,
@@ -15,14 +14,36 @@ export const getCard = (props, data) => {
   };
 };
 
-export const allCards = (data) => {
+export const allCards = (props, data) => {
   return (dispatch) => {
-    console.log(data);
     return axios
-      .post("http://localhost:3001/api/allCards")
+      .post("http://localhost:3001/api/allCards", props)
       .then((res) => {
-        console.log(res, "<===============");
         dispatch({ type: "ALL_CARDS", payload: res.data });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const wallet = (props, data) => {
+  return (dispatch) => {
+    return axios
+      .post("http://localhost:3001/api/wallet", props)
+      .then((res) => {
+        if (res.data.userCardList === null) {
+          console.log("No cards found");
+        } else {
+          const cardsBackend = [res.data.userCardList];
+          const cardsBackendSplited = `${cardsBackend}`.split(",");
+          let countCards = 0;
+
+          cardsBackendSplited.forEach((card) => {
+            countCards += 1;
+          });
+
+          dispatch(allCards(props));
+          dispatch({ type: "COUNT_CARDS", payload: countCards });
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -30,14 +51,9 @@ export const allCards = (data) => {
 
 export const cardToDb = (data) => {
   return (dispatch) => {
-    console.log("");
-    console.log(data);
-    console.log("");
     return axios
       .post("http://localhost:3001/api/cardToDb", data)
-      .then((res) => {
-        console.log(res.data, "<== RES card to DB");
-      })
+      .then((res) => {})
       .catch((err) => console.log(err));
   };
 };
@@ -47,7 +63,6 @@ export const checkLoginInfos = (data) => {
     return axios
       .post("http://localhost:3001/api/checkLoginInfos", data)
       .then((res) => {
-        console.log(res, "<== RES check Login Infos");
         if (res.status === 200) {
           dispatch({ type: "USER_LOG", payload: res.data });
         }
@@ -61,13 +76,10 @@ export const addNewUser = (data) => {
     return axios
       .post("http://localhost:3001/api/addNewUser", data)
       .then((res) => {
-        console.log(res, "<== RES check SignIn Infos");
         if (res.status === 200) {
-          alert("User added successfully");
+          console.log("User added successfully");
         }
-        if (res.status === 204) {
-          alert("User already exist");
-        }
-      });
+      })
+      .catch((err) => alert("Username already in use"));
   };
 };

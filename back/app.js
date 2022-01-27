@@ -33,15 +33,80 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
+// Display all user cards
 app.post("/api/allCards", (req, res, next) => {
-  db.query(`SELECT * FROM card`, function (err, result) {
-    if (err) {
-      throw err;
-    }
-    res.status(200).json(result);
-  });
+  const userInfo = req.body;
+
+  // Check user identity
+  const checkToken = jwt.verify(userInfo.token, process.env.TOKEN_PASS);
+
+  const decryptName = cryptoJS.AES.decrypt(checkToken.userNameCrypt, key, {
+    iv: iv,
+  }).toString(cryptoJS.enc.Utf8);
+  const decryptId = cryptoJS.AES.decrypt(checkToken.cryptID, key, {
+    iv: iv,
+  }).toString(cryptoJS.enc.Utf8);
+
+  // Identity ok, get userCardList
+  if (userInfo.userName === decryptName) {
+    db.query(
+      `SELECT * FROM user WHERE id_User = '${decryptId}'`,
+      function (err, result) {
+        if (err) {
+          throw err;
+        }
+
+        // Store userCardList
+        const userCardsListed = JSON.parse(result[0].userCardList);
+        const getIdsList = userCardsListed[0];
+        const idsListed = `${getIdsList}`.split(",");
+        const allUserCards = [];
+
+        idsListed.map((e) => {
+          allUserCards.push(`"${e}"`);
+        });
+
+        // Get Cards from DB
+        db.query(
+          `SELECT * FROM card WHERE cardId in (${allUserCards})`,
+          function (err, result) {
+            if (err) {
+              throw err;
+            }
+            res.status(200).json(result);
+          }
+        );
+      }
+    );
+  } else {
+    res.status(404).json("UserInfos not ok");
+  }
 });
 
+// Check Wallet Info
+app.post("/api/wallet", (req, res, next) => {
+  const idUser = req.body;
+
+  // Check Token
+  const checkToken = jwt.verify(idUser.token, process.env.TOKEN_PASS);
+  // Decrypt TokenData
+  const decryptID = cryptoJS.AES.decrypt(checkToken.cryptID, key, {
+    iv: iv,
+  }).toString(cryptoJS.enc.Utf8);
+
+  // Look if collection is empty
+  db.query(
+    `SELECT * FROM user WHERE id_User = '${decryptID}'`,
+    (err, result) => {
+      if (err) {
+        throw err;
+      }
+      res.status(200).json(result[0]);
+    }
+  );
+});
+
+// Add card to DB
 app.post("/api/cardToDb", (req, res, next) => {
   const cardToDb = req.body.card;
   const idUserToCardToDb = req.body.token;
@@ -53,12 +118,10 @@ app.post("/api/cardToDb", (req, res, next) => {
     JSON.parse(idUserToCardToDb).token,
     process.env.TOKEN_PASS
   );
-  console.log(checkToken.cryptID);
   // Decrypt TokenData
   const decryptID = cryptoJS.AES.decrypt(checkToken.cryptID, key, {
     iv: iv,
   }).toString(cryptoJS.enc.Utf8);
-  console.log(decryptID, "decryptID");
   // Check if card already in DB
   db.query(
     `SELECT * FROM card WHERE cardName = '${cardToDb.name}'`,
@@ -68,7 +131,6 @@ app.post("/api/cardToDb", (req, res, next) => {
       }
       // If card already in DB
       if (result[0]) {
-        console.log("Already added");
         const idToAdd = result[0].cardId;
         // Add card in User List
         db.query(
@@ -77,17 +139,27 @@ app.post("/api/cardToDb", (req, res, next) => {
             if (err) {
               throw err;
             }
-            const getCardList = JSON.parse(result[0].userCardList);
+            let getCardList = JSON.parse(result[0].userCardList);
+
+            if (getCardList === null) {
+              getCardList = [idToAdd];
+            }
+
             getCardList.push(`${idToAdd}`);
             db.query(
-              `UPDATE user SET userCardList = JSON_ARRAY('${getCardList}');`
+              `UPDATE user SET userCardList = JSON_ARRAY('${getCardList}') WHERE id_User = '${decryptID}'`,
+              function (err, result) {
+                if (err) {
+                  throw err;
+                }
+                res.status(200).json(result);
+              }
             );
           }
         );
       }
       // If not
       else {
-        console.log("New Card");
         // Add Card into DB
         db.query(
           `INSERT INTO card (cardName, cardId, cardVisual, cardPrice, cardColor)
@@ -104,11 +176,16 @@ app.post("/api/cardToDb", (req, res, next) => {
                 if (err) {
                   throw err;
                 }
-                const getCardList = JSON.parse(result[0].userCardList);
+                let getCardList = JSON.parse(result[0].userCardList);
+
+                if (getCardList === null) {
+                  getCardList = [idToAdd];
+                }
+
                 getCardList.push(`${idToAdd}`);
                 // Add card Id to cardList
                 db.query(
-                  `UPDATE user SET userCardList = JSON_ARRAY('${getCardList}')`,
+                  `UPDATE user SET userCardList = JSON_ARRAY('${getCardList}') WHERE id_User = '${decryptID}'`,
                   function (err, result) {
                     if (err) {
                       throw err;
@@ -128,119 +205,75 @@ app.post("/api/cardToDb", (req, res, next) => {
       }
     }
   );
-
-  // db.query(
-  //   `INSERT INTO card (cardName, cardId, cardVisual, cardPrice, cardColor)
-  //     VALUES ('${cardToDb.name}', '${cardToDb.id}', '${cardToDb.image_uris.normal}', '${cardToDb.prices.eur}', '${cardToDb.colors}')`,
-  //   function (err, result) {
-  //     if (err) {
-  //       throw err;
-  //     }
-
-  //     db.query(
-  //       `SELECT * FROM card WHERE cardName = '${cardToDb.name}'`,
-  //       function (err, result) {
-  //         if (err) {
-  //           throw err;
-  //         }
-
-  //         db.query(
-  //           `SELECT * FROM user WHERE userName = 'K'`,
-  //           function (err, result) {
-  //             if (err) {
-  //               throw err;
-  //             }
-  //             db.query(
-  //               `UPDATE user SET userCards = concat(userCards, '') WHERE userName = ''`,
-  //               function (err, result) {
-  //                 if (err) {
-  //                   throw err;
-  //                 }
-  //               }
-  //             );
-  //           }
-  //         );
-  //         console.log(result);
-  //       }
-  //     );
-
-  //     res.status(200).json("Ok");
-  //   }
-  // );
 });
 
 // Login
 app.post("/api/checkLoginInfos", (req, res, next) => {
   const infosUser = req.body;
-  console.log("");
-  console.log("User Data here :", infosUser);
 
   // Encrypt userName for search in DB
 
   const cryptUserName = cryptoJS.AES.encrypt(`${infosUser.userName}`, key, {
     iv: iv,
   }).toString();
-  console.log(cryptUserName, "cryptUserName");
   const decryptUserName = cryptoJS.AES.decrypt(cryptUserName, key, {
     iv: iv,
   }).toString(cryptoJS.enc.Utf8);
-  console.log(decryptUserName, "cryptUserName");
 
   // Look for user
-  db.query(`SELECT * FROM user`, function (err, result) {
-    if (err) {
-      throw err;
-    }
+  db.query(
+    `SELECT * FROM user WHERE userName = '${cryptUserName}'`,
+    function (err, result) {
+      if (err) {
+        throw err;
+      }
 
-    // Crypt userId
-    const cryptId = cryptoJS.AES.encrypt(`${result[0].id_User}`, key, {
-      iv: iv,
-    }).toString();
+      // Crypt userId
+      const cryptId = cryptoJS.AES.encrypt(`${result[0].id_User}`, key, {
+        iv: iv,
+      }).toString();
 
-    // User found
-    if (result[0] && result[0].userName === cryptUserName) {
-      // Check password
-      bcrypt.compare(
-        infosUser.userPassword,
-        result[0].userPassword,
-        function (err, result) {
-          if (err) {
-            throw err;
+      // User found
+      if (result[0] && result[0].userName === cryptUserName) {
+        // Check password
+        bcrypt.compare(
+          infosUser.userPassword,
+          result[0].userPassword,
+          function (err, result) {
+            if (err) {
+              throw err;
+            }
+            // If passwords verification ok
+            if (result === true) {
+              res.status(200).json({
+                userName: infosUser.userName,
+                token: jwt.sign(
+                  {
+                    userNameCrypt: cryptUserName,
+                    cryptID: cryptId,
+                  },
+                  process.env.TOKEN_PASS,
+                  {
+                    expiresIn: process.env.TOKEN_TIME_OUT,
+                  }
+                ),
+              });
+            }
+            if (result === false) {
+              res.status(404).json("UserInfos not ok");
+            }
           }
-          // If passwords verification ok
-          if (result === true) {
-            res.status(200).json({
-              userName: infosUser.userName,
-              token: jwt.sign(
-                {
-                  userNameCrypt: cryptUserName,
-                  cryptID: cryptId,
-                },
-                process.env.TOKEN_PASS,
-                {
-                  expiresIn: process.env.TOKEN_TIME_OUT,
-                }
-              ),
-            });
-          }
-          if (result === false) {
-            res.status(404).json("UserInfos not ok");
-          }
-        }
-      );
-    } else {
-      console.log("User not Found or wrong Pass");
-      res.status(404).json("UserInfos not ok");
+        );
+      } else {
+        res.status(404).json("UserInfos not ok");
+      }
     }
-  });
+  );
 });
 
 // Signin
 app.post("/api/addNewUser", (req, res, next) => {
   const infosNewUser = req.body;
-
-  console.log("");
-  console.log(infosNewUser);
 
   // If Data ok
   if (
@@ -249,7 +282,6 @@ app.post("/api/addNewUser", (req, res, next) => {
     infosNewUser.userPasswordVerif !== null &&
     infosNewUser.userPassword === infosNewUser.userPasswordVerif
   ) {
-    // Crypt userName
     const cryptUserName = cryptoJS.AES.encrypt(
       `${infosNewUser.userName}`,
       key,
@@ -257,6 +289,7 @@ app.post("/api/addNewUser", (req, res, next) => {
         iv: iv,
       }
     ).toString();
+
     const decryptUserName = cryptoJS.AES.decrypt(cryptUserName, key, {
       iv: iv,
     }).toString(cryptoJS.enc.Utf8);
@@ -266,7 +299,7 @@ app.post("/api/addNewUser", (req, res, next) => {
 
     // Check new user isn't already into DB
     db.query(
-      `SELECT * FROM user WHERE userName = "${infosNewUser.userName}"`,
+      `SELECT * FROM user WHERE userName = "${cryptUserName}"`,
       function (err, reslv) {
         if (err) {
           throw err;
@@ -276,13 +309,12 @@ app.post("/api/addNewUser", (req, res, next) => {
         if (reslv.length === 0) {
           // Add newUser to DB
           db.query(
-            `INSERT INTO user (userName, userPassword) 
+            `INSERT INTO user (userName, userPassword)
                   VALUES ('${cryptUserName}', '${cryptedPass}')`,
             function (err, result) {
               if (err) {
                 throw err;
               }
-              console.log("Hello Friend");
               res.status(200).json("OKnewUser");
             }
           );
@@ -290,8 +322,7 @@ app.post("/api/addNewUser", (req, res, next) => {
 
         // If user already exist in DB
         if (reslv[0]) {
-          console.log("Acount already exist in DB");
-          res.status(204).json("AF");
+          res.status(404).json("AF");
         }
       }
     );

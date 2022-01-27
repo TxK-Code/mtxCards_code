@@ -16,9 +16,7 @@ export default function AddCard() {
     userToken: userLS,
   });
 
-  useEffect(() => {
-    console.log("Card Updated");
-  }, [card]);
+  useEffect(() => {}, [card]);
 
   const dispatch = useDispatch();
 
@@ -35,13 +33,17 @@ export default function AddCard() {
   const handleFormAdd = (e) => {
     e.preventDefault();
     dispatch(getCard(card));
-    const uploadedCard = {
-      ...card,
-      cardId: cardSelected[0].id,
-      userToken: userLS,
-    };
-    console.log(uploadedCard);
-    setCard(uploadedCard);
+    if (cardSelected[0]) {
+      const uploadedCard = {
+        ...card,
+        cardId: cardSelected[0].id,
+        userToken: userLS,
+      };
+      setCard(uploadedCard);
+    } else {
+      dispatch(getCard(card));
+    }
+    document.getElementById("cardTitle").value = "";
   };
 
   const cardToSendArray = {

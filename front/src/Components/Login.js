@@ -18,7 +18,6 @@ export default function Login() {
   const history = useNavigate();
 
   useEffect(() => {
-    console.log(userLogged);
     if (userLogged[0]) {
       localStorage.setItem("user", JSON.stringify(userLogged[0]));
       history("/index");
@@ -32,7 +31,6 @@ export default function Login() {
         userName: e.target.value,
       };
       setLoginData(newUserState);
-      console.log(newUserState);
     }
   };
 
@@ -43,7 +41,6 @@ export default function Login() {
         userPassword: e.target.value,
       };
       setLoginData(newUserState);
-      console.log(newUserState);
     }
   };
 
@@ -67,24 +64,23 @@ export default function Login() {
     <>
       {modalSignUp === false ? (
         <div className="login">
+          <p className="login__logo">Mtx</p>
           <form action="" className="login__form" onSubmit={sendLoginInfos}>
-            <label htmlFor="username" className="login__label">
-              Username
-            </label>
+            <label htmlFor="username" className="login__label"></label>
             <input
               type="text"
               className="login__input  userName"
               onChange={handleLogin}
               id="username"
+              placeholder="UserName"
             />
-            <label htmlFor="password" className="login__label">
-              Password
-            </label>
+            <label htmlFor="password" className="login__label"></label>
             <input
               type="password"
               className="login__input userPass"
               onChange={handlePass}
               id="password"
+              placeholder="Password"
             />
             <button className="login__btn" type="submit">
               Login

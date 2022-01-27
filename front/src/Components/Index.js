@@ -1,6 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+import { wallet } from "../redux/actions/post.action";
 
 export default function Index() {
+  const { countCards } = useSelector((state) => state.countCardsDB);
+
+  const dispatch = useDispatch();
+  const userInfosLS = JSON.parse(localStorage.getItem("user"));
+
+  useEffect(() => {
+    dispatch(wallet(userInfosLS));
+  }, []);
+
   return (
     <>
       <div className="indexHeader">
@@ -12,7 +24,9 @@ export default function Index() {
               and admire your cards without having to worry about damaging them.
             </p>
 
-            <h2 className="indexHeaderL__titleTwo">Number of cards : 875423</h2>
+            <h2 className="indexHeaderL__titleTwo">
+              Number of cards : {countCards[0] === 0 ? "0" : countCards[0]}
+            </h2>
             <h2 className="indexHeaderL__titleTwo">Total value : 12345$</h2>
           </div>
         </div>

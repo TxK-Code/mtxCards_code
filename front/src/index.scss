@@ -15,6 +15,10 @@ a {
     color: black;
 }
 
+html {
+    background: #fff;
+}
+
 .navbar {
     width: 100%;
     height: 20%;
@@ -110,14 +114,13 @@ a {
 // add card :
 
 .collection {
-    background: rgb(158, 158, 158);
     width: 100%;
     height: 100vh;
     display: flex;
     flex-direction: row;
     border-top: 2px solid #333;
     &__leftPanel {
-        background: rgb(151, 121, 121);
+        background: #8d99ae;
         width: 10%;
         height: 100%;
         border-right: 2px solid #333;
@@ -145,12 +148,20 @@ a {
         padding-bottom: 1rem;
     }
     &__sorted {
+        width: 90%;
+        margin: auto;
+        margin-bottom: .3rem;
         padding-top: .2rem;
         padding-bottom: .2rem;
-        border-bottom: 2px solid #333;
+        border: 2px solid #333;
+        border-radius: 12px;
         font-family: "Montserrat", sans-serif;
         font-size: 17px;
         font-weight: 500;;
+        &:hover {
+            cursor: pointer;
+            transition: all 200ms ease-in-out;;
+        }
     }
     &__sortedFirst {
         border-top: 2px solid #333;
@@ -174,12 +185,56 @@ a {
     }
     &__showImg {
         border-radius: 6px;
-        transition: all 200ms ease-in-out;
+        transition: all 200ms ease-in;
         &:hover {
-            transform: scale(1.5);
+            transform: scale(1.4);
             cursor: pointer;
             box-shadow: #333 2px 3px 3px;
         }
+    }
+}
+
+// LeftPanel List
+#li_01 {
+    margin-bottom: 1.3rem;
+    background: #f4a261;
+    &:hover {
+        background: darken(#f4a261, 10%);
+        color: #fff;
+    }
+}
+#li_02 {
+    background: #c75146;
+    &:hover {
+        background: darken(#c75146, 5%);
+        color: #fff;
+    }
+}
+#li_03 {
+    background: #e5e6e4 ;
+    &:hover {
+        background: darken(#e5e6e4, 10%);
+    }
+}
+#li_04 {
+    background: #59cd90;
+    &:hover {
+        background: darken(#59cd90, 15%);
+        color: #fff;
+    }
+}
+#li_05 {
+    background: #212529;
+    color: #fff;
+    &:hover {
+        background: lighten(#212529, 10%);
+    }
+}
+#li_06 {
+    background: #0466c8;
+    &:hover {
+        background: darken(#0466c8, 15%);
+        color: #fff;
     }
 }
 
@@ -269,7 +324,7 @@ a {
         font-family: 'Montserrat', sans-serif;
         text-align: center;
         border: none;
-        border: 1.3px solid #333;
+        border: 2px solid #333;
         border-radius: 13px 0 0 13px;
         font-size: 1.8rem;
         background: transparent;
@@ -281,16 +336,17 @@ a {
         width: 10%;
         height: auto;
         font-family: 'Montserrat', sans-serif;
-        border: 1.3px solid #333;
+        border: 2px solid #333;
         border-left: none;
         border-radius: 0 13px 13px 0;
-
+        background: #f4a261;
         &:hover {
             cursor: pointer;
         }
     }
     &__addbtnLogo {
         width: 45%;
+        background: transparent;
     }
 
     &__addresult {
@@ -303,9 +359,10 @@ a {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-around;
-        border: rgb(0, 0, 0) 1px solid;
+        border: 2px solid #333;
         border-radius: 13px;
         box-shadow: #333 2px 3px 3px;
+        background: #e5e6e4 ;
     }
     &__addresultDiv {
         display: flex;
@@ -345,24 +402,38 @@ a {
         margin-top: 3rem;
     }
     &__addCollectionBtn {
-        width: 40%;
-        height: 2rem;
-        margin-right: 1rem;
+        margin: auto;
+        margin-top: 1.8rem;
+        width: 50%;
+        height: 3rem;
         font-family: 'Montserrat', sans-serif;
-        text-align: center;
+        font-size: 1.3rem;
+        border: none;
+        border-radius: 6px;
+        background: #f4a261;
+        color: #fff;
         &:hover {
             cursor: pointer;
+            box-shadow: #333 1px 2px 2px;
         }
     }
 }
 
 .login {
     margin: auto;
-    margin-top: 10%;
-    width: 40%;
+    margin-top: 6%;
+    width: 25%;
     height: auto;
     padding: 2.3rem;
-    border: #333 1px solid;
+    background: #e5e6e4;
+    border: 2px solid #333;
+    &__logo {
+        text-align: center;
+        margin-bottom: 1rem;
+        font-family: 'Inspiration', cursive;
+        font-size: 55px;
+        font-weight: 700;
+    }
     &__form {
         display: flex;
         flex-direction: column;
@@ -376,11 +447,13 @@ a {
     }
     &__input {
         margin-bottom: .4rem;
-        height: 2.3rem;
+        height: 3.2rem;
+        border: none;
         border-radius: none;
         padding-left: .5rem;
         font-family: 'Montserrat', sans-serif;
         font-size: 1.3rem;
+        background: #fff;
         &:focus {
             outline: none;
         }
@@ -388,22 +461,30 @@ a {
     &__btn {
         margin: auto;
         margin-top: 1.8rem;
-        width: 25%;
+        width: 50%;
         height: 3rem;
         font-family: 'Montserrat', sans-serif;
         font-size: 1.3rem;
+        border: none;
+        border-radius: 6px;
+        background: #f4a261;
+        color: #fff;
         &:hover {
             cursor: pointer;
+            box-shadow: #333 1px 2px 2px;
         }
     }
     &__btnCreate {
-        margin-left: auto;
-        margin-top: 0;
-        width: 11%;
-        height: 3rem;
+        margin: auto;
+        margin-top: 1.8rem;
+        width: 30%;
+        height: 1.8rem;
         font-family: 'Montserrat', sans-serif;
-        font-size: .6rem;
+        font-size: .8rem;
         font-weight: 600;
+        background: #fff;
+        border-radius: 6px;
+
         &:hover {
             cursor: pointer;
         }
@@ -411,16 +492,13 @@ a {
 }
 
 .modalSignUp {
-    position: absolute;
-    top: 14.7%;
-    left: 27.75%;
     margin: auto;
-    margin-top: 10%;
-    width: 40%;
+    margin-top: 6%;
+    width: 25%;
     height: auto;
     padding: 2.3rem;
-    border: #333 1px solid;
-    background: white;
+    background: #e5e6e4;
+    border: 2px solid #333;
     &__form {
         display: flex;
         flex-direction: column;
@@ -440,41 +518,66 @@ a {
     }
     &__input {
         margin-bottom: .4rem;
-        height: 2.3rem;
+        height: 3.2rem;
+        border: none;
         border-radius: none;
         padding-left: .5rem;
         font-family: 'Montserrat', sans-serif;
         font-size: 1.3rem;
+        background: #fff;
         &:focus {
             outline: none;
         }
     }
     &__span {
         width: 100%;
-        height: 3px;
-        background: #000;
+        height: 4px;
+        background: #2b2d42;
         position: absolute;
-        bottom: 7%;
+        bottom: 4%;
+    }
+    &__infos {
+        margin-top: -3px;
+        margin-bottom: .1rem;
+        padding-bottom: .3rem;
+        padding-top: .2rem;
+        background: #c75146;
+        display: flex;
+    }
+    &__infosText {
+        color: #fff;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        width: 100%;
+        text-align: center;
     }
     &__btn {
         margin: auto;
         margin-top: 1.8rem;
-        width: 25%;
+        width: 50%;
         height: 3rem;
         font-family: 'Montserrat', sans-serif;
-        font-size: 1.2rem;
+        font-size: 1.3rem;
+        font-weight: 500;
+        border: none;
+        border-radius: 6px;
+        background: #f4a261;
+        color: #fff;
         &:hover {
             cursor: pointer;
+            box-shadow: #333 1px 2px 2px;
         }
     }
     &__btnLogin {
-        margin-left: auto;
-        margin-top: 0;
-        width: 11%;
-        height: 3rem;
+        margin: auto;
+        margin-top: 1.8rem;
+        width: 30%;
+        height: 1.8rem;
         font-family: 'Montserrat', sans-serif;
-        font-size: .9rem;
-        font-weight: 500;
+        font-size: .8rem;
+        font-weight: 600;
+        background: #fff;
+        border-radius: 6px;
         &:hover {
             cursor: pointer;
         }
