@@ -18,7 +18,9 @@ For this version, the available features are :
 - Displaying the collection of cards,
 - Card counter.
 
+### Link to GitHub Pages :
 
+https://txk-code.github.io/mtxCards/
 
 
 ## Screenshots
