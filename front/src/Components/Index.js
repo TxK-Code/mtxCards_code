@@ -36,6 +36,7 @@ export default function Index() {
             alt="Image de cartes Magic"
             className="indexHeaderR__img"
           />
+          <div className="indexHeaderR__blur"></div>
         </div>
       </div>
     </>

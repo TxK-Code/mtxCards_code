@@ -68,6 +68,9 @@ export default function AddCard() {
             <label htmlFor="cardTitle" className="addCard__addlabel">
               Card Name :
             </label>
+            <p className="addCard__addtitle">
+              Add a card to your collection by simply searching for it by name !
+            </p>
             <div className="addCard__adddiv">
               <input
                 type="text"
@@ -84,7 +87,7 @@ export default function AddCard() {
               </button>
             </div>
           </form>
-          <div>
+          <div className="addCard__divResultSearch">
             {cardSelected[0] != null ? (
               <div className="addCard__addresult">
                 <img

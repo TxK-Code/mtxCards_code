@@ -27,16 +27,27 @@ html {
     justify-content: flex-start;
     align-items: center;
     margin-top: 2rem;
+    @media screen and (max-width: 375px) {
+        margin-top: 0;
+        height: 10%;
+    }
     &__logo {
         width: 20%;
         padding-left: 3%;
         font-size: 40px;
         font-family: 'Inspiration', cursive;
+        @media screen and (max-width: 375px) {
+            font-size: 20px;
+        }
     }
 
     &__linksbox {
         width: 80%;
         height: 140.9px;
+        @media screen and (max-width: 375px) {
+            width: 80%;
+            height: 100%;
+        }
     }
 
     &__links {
@@ -46,6 +57,9 @@ html {
         align-items: center;
         width: 100%;
         height: 100%;
+        @media screen and (max-width: 375px) {
+            justify-content: center;
+        }
     }
 
     &__onelink {
@@ -56,15 +70,25 @@ html {
         font-family: 'Montserrat', sans-serif;
         list-style-type: none;
         transition: all 180ms cubic-bezier(.67,.02,.59,1.05);
+        @media screen and (max-width: 375px) {
+            font-size: .8rem;
+            font-weight: 500;
+        }
         &:hover {
             font-weight: 500;
             font-size: 2.3rem;
             text-shadow: #333 1px 1px 0px;
             cursor: pointer;
+            @media screen and (max-width: 375px) {
+                font-size: .9rem;
+            }
         }
     }
     &__onelinkFirst {
         margin-left: -2rem;
+        @media screen and (max-width: 375px) {
+            margin-left: 0;
+        }
     }
 }
 
@@ -72,6 +96,10 @@ html {
 
 .indexHeader {
     display: flex;
+    @media screen and (max-width: 375px) {
+        display: flex;
+        flex-direction: column-reverse;
+    }
 }
 
 .indexHeaderL {
@@ -79,25 +107,56 @@ html {
     height: auto;
     padding-left: 10%;
     padding-top: 5%;
+    position: relative;
+    @media screen and (max-width: 375px) {
+        width: 100%;
+        padding-left: 0;
+    }
     &__container {
         text-align: left;
         width: 100%;
+        @media screen and (max-width: 375px) {
+            width: 100%;
+        }
     }
     &__title {
         font-family: 'Montserrat', sans-serif;
         font-size: 45px;
         margin-bottom: .8rem;
+        @media screen and (max-width: 375px) {
+            position: absolute;
+            top: -48%;
+            color: #fff;
+            text-shadow: #333 3px 2px 2px;
+            padding-left: 1rem;
+            z-index: 1;
+        }
     }
     &__titleTwo {
         font-family: 'Montserrat', sans-serif;
         font-size: 30px;
         margin-bottom: .8rem;
+        @media screen and (max-width: 375px) {
+            font-size: 27px;
+            text-align: center;
+        }
     }
     &__description {
         font-family: 'Montserrat', sans-serif;
         width: 72%;
         font-size: 20px;
         margin-bottom: 8rem;
+        @media screen and (max-width: 375px) {
+            padding-left: 0;
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 2rem;
+            text-align: justify;
+            font-weight: 500;
+            font-size: 27px;
+
+        }
     }
 }
 
@@ -105,9 +164,32 @@ html {
     width: 50%;
     padding-top: 5%;
     padding-left: 5%;
+    position: relative;
+    z-index: 0;
+    @media screen and (max-width: 375px) {
+        width: 100%;
+        padding-left: 0;
+    }
+    &__blur {
+        @media screen and (max-width: 375px) {
+            width: 100%;
+            height: 90%;
+            background: rgba(10, 8, 175, 0.40);
+            position: absolute;
+            top: 8%;
+        }
+    }
     &__img {
         border-radius: 20px;
         box-shadow: #333 1px 5px 5px;
+        @media screen and (max-width: 375px) {
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+            box-shadow: none;
+            border-top: 2px solid #333;
+            border-bottom: 2px solid #333;
+        }
     }
 }
 
@@ -115,10 +197,13 @@ html {
 
 .collection {
     width: 100%;
-    height: 100vh;
+    height: auto;
     display: flex;
     flex-direction: row;
     border-top: 2px solid #333;
+    @media screen and (max-width: 375px) {
+        flex-direction: column;
+    }
     &__leftPanel {
         background: #8d99ae;
         width: 10%;
@@ -128,6 +213,13 @@ html {
         flex-direction: column;
         text-align: center;
         position: absolute;
+        @media screen and (max-width: 375px) {
+            width: 100%;
+            height: 10%;
+            border-bottom: 2px solid #333;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
     }
     &__sortTitle {
         width: 100%;
@@ -137,6 +229,9 @@ html {
         padding-top: 10px;
         font-family: "Montserrat", sans-serif;
         font-size: 20px;
+        @media screen and (max-width: 375px) {
+            display: none;
+        }
     }
     &__sortBy {
         width: 100%;
@@ -146,6 +241,12 @@ html {
         list-style-type: none;
         margin-top: 1rem;
         padding-bottom: 1rem;
+        @media screen and (max-width: 375px) {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin: 0;
+        }
     }
     &__sorted {
         width: 90%;
@@ -157,7 +258,13 @@ html {
         border-radius: 12px;
         font-family: "Montserrat", sans-serif;
         font-size: 17px;
-        font-weight: 500;;
+        font-weight: 500;
+        @media screen and (max-width: 375px) {
+            width: 10%;
+            height: 2rem;
+            font-size: 0px;
+            margin-bottom: 0;
+        }
         &:hover {
             cursor: pointer;
             transition: all 200ms ease-in-out;;
@@ -165,6 +272,7 @@ html {
     }
     &__sortedFirst {
         border-top: 2px solid #333;
+
     }
     &__rightPanel {
         width: 90%;
@@ -177,11 +285,22 @@ html {
         align-content: flex-start;
         padding-left: 3px;
         padding-top: 3px;
+        @media screen and (max-width: 375px) {
+            width: 98%;
+            justify-content: center;
+            margin-left: 0;
+            padding-left: 0;
+            margin: auto;
+            margin-top: 4.5rem;
+        }
     }
     &__show {
         margin-right: 3px;
         margin-bottom: 3px;
         height: 204px;
+        @media screen and (max-width: 375px) {
+            height: 100%;
+        }
     }
     &__showImg {
         border-radius: 6px;
@@ -198,6 +317,9 @@ html {
 #li_01 {
     margin-bottom: 1.3rem;
     background: #f4a261;
+    @media screen and (max-width: 375px) {
+        margin-bottom: 0;
+    }
     &:hover {
         background: darken(#f4a261, 10%);
         color: #fff;
@@ -248,46 +370,20 @@ html {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
-    &__translateBox {
+    @media screen and (max-width: 375px) {
+        margin-top: 0;
         width: 100%;
-        height: auto;
-        padding: 2rem;
+        padding: 0;
     }
-    &__translateform {
-        background: rgb(206, 162, 162);
-        border-radius: 13px;
-        height: 9rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    &__translatelabel {
-        width: 20%;
-        font-family: 'Montserrat', sans-serif;
-        font-size: 17px;
-        font-weight: 500;
-        margin-top: 1rem;
-        margin-bottom: 1rem;
-    }
-    &__translateinput {
-        width: 40%;
-        height: 2rem;
-        margin-right: 1rem;
-        font-family: 'Montserrat', sans-serif;
-        text-align: center;
-    }
-    &__translatebtn {
-        margin-top: .5rem;
-        padding: .4rem;
-        font-family: 'Montserrat', sans-serif;
-
-    }
-
     &__addBox {
         width: 100%;
         height: auto;
         padding: 2rem;
         padding-top: 0rem;
+        @media screen and (max-width: 375px) {
+            padding: 0rem;
+            margin-top: 1rem;
+        }
     }
     &__addform {
         border-radius: 13px;
@@ -297,6 +393,9 @@ html {
         flex-wrap: wrap;
         align-items: flex-start;
         justify-content: flex-start;
+        @media screen and (max-width: 375px) {
+            width: 100%;
+        }
     }
     &__addlabel {
         width: 100%;
@@ -306,6 +405,23 @@ html {
         margin-top: 1rem;
         margin-bottom: .4rem;
         text-align: left;
+        @media screen and (max-width: 375px) {
+            display: none;
+        }
+    }
+    &__addtitle {
+        display: none;
+        @media screen and (max-width: 375px) {
+            display: block;
+            width: 90%;
+            margin: auto;
+            margin-top: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 20px;
+        }
     }
     &__adddiv {
         width: 40%;
@@ -314,6 +430,10 @@ html {
         flex-direction: row;
         position: relative;
         border-radius: 13px;
+        @media screen and (max-width: 375px) {
+            width: 90%;
+            margin: auto;
+        }
         &:hover {
             box-shadow: #333 1px 2px 2px;
         }
@@ -328,6 +448,9 @@ html {
         border-radius: 13px 0 0 13px;
         font-size: 1.8rem;
         background: transparent;
+        @media screen and (max-width: 375px) {
+            width: 85%;
+        }
         &:focus {
             outline: none;
         }
@@ -340,6 +463,9 @@ html {
         border-left: none;
         border-radius: 0 13px 13px 0;
         background: #f4a261;
+        @media screen and (max-width: 375px) {
+            width: 15%;
+        }
         &:hover {
             cursor: pointer;
         }
@@ -348,7 +474,9 @@ html {
         width: 45%;
         background: transparent;
     }
-
+    &__divResultSearch {
+        margin-bottom: 2rem;
+    }
     &__addresult {
         padding-top: .5rem;
         margin-top: 1.5rem;
@@ -363,6 +491,13 @@ html {
         border-radius: 13px;
         box-shadow: #333 2px 3px 3px;
         background: #e5e6e4 ;
+        @media screen and (max-width: 375px) {
+            width: 95%;
+            margin-right: auto;
+            margin-left: auto;
+            flex-direction: column;
+            align-items: center;
+        }
     }
     &__addresultDiv {
         display: flex;
@@ -371,6 +506,10 @@ html {
         height: auto;
         margin-top: 10%;
         margin-bottom: auto;
+        @media screen and (max-width: 375px) {
+            width: 90%;
+            margin-top: 0;
+        }
     }
     &__addresultTitle {
         margin-bottom: 1.8rem;
@@ -379,6 +518,9 @@ html {
         text-align: center;
         font-family: "Inspiration", sans-serif;
         font-size: 55px;
+        @media screen and (max-width: 375px) {
+            display: none;
+        }
     }
     &__addresultImg {
         width: 30%;
@@ -387,19 +529,33 @@ html {
         box-shadow: #333 2px 3px 3px;
         margin-bottom: 3rem;
         margin-top: 2rem;
+        @media screen and (max-width: 375px) {
+            width: 80%;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
     }
     &__addresultDescription {
         font-size: 17px;
         margin-top: .8rem;
+        @media screen and (max-width: 375px) {
+            display: none;
+        }
     }
     &__addresultPrice {
         margin-top: 1.8rem;
         font-size: 40px;
         font-weight: 500;
+        @media screen and (max-width: 375px) {
+            margin-top: 1rem;;
+        }
     }
     &__addCollectionDiv {
         padding-bottom: .8rem;
         margin-top: 3rem;
+        @media screen and (max-width: 375px) {
+            margin-top: 1rem;
+        }
     }
     &__addCollectionBtn {
         margin: auto;
@@ -412,6 +568,11 @@ html {
         border-radius: 6px;
         background: #f4a261;
         color: #fff;
+        @media screen and (max-width: 375px) {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            font-size: 17px;
+        }
         &:hover {
             cursor: pointer;
             box-shadow: #333 1px 2px 2px;
@@ -427,17 +588,29 @@ html {
     padding: 2.3rem;
     background: #e5e6e4;
     border: 2px solid #333;
+    @media screen and (max-width: 375px) {
+        margin-top: 15%;
+        width: 92%;
+        padding: 0;
+    }
     &__logo {
         text-align: center;
         margin-bottom: 1rem;
         font-family: 'Inspiration', cursive;
         font-size: 55px;
         font-weight: 700;
+        @media screen and (max-width: 375px) {
+            margin-top: 1rem;;
+        }
     }
     &__form {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
+        @media screen and (max-width: 375px) {
+            width: 95%;
+            margin: auto;
+        }
     }
     &__label {
         margin-bottom: .3rem;
@@ -469,6 +642,9 @@ html {
         border-radius: 6px;
         background: #f4a261;
         color: #fff;
+        @media screen and (max-width: 375px) {
+            width: 80%;
+        }
         &:hover {
             cursor: pointer;
             box-shadow: #333 1px 2px 2px;
@@ -484,7 +660,10 @@ html {
         font-weight: 600;
         background: #fff;
         border-radius: 6px;
-
+        @media screen and (max-width: 375px) {
+            margin-bottom: 1rem;
+            width: 50%;
+        }
         &:hover {
             cursor: pointer;
         }
@@ -499,10 +678,19 @@ html {
     padding: 2.3rem;
     background: #e5e6e4;
     border: 2px solid #333;
+    @media screen and (max-width: 375px) {
+        margin-top: 15%;
+        width: 92%;
+        padding: 0;
+    }
     &__form {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
+        @media screen and (max-width: 375px) {
+            width: 95%;
+            margin: auto;
+        }
     }
     &__div {
         display: flex;
@@ -563,6 +751,11 @@ html {
         border-radius: 6px;
         background: #f4a261;
         color: #fff;
+        @media screen and (max-width: 375px) {
+            width: 85%;
+            margin: auto;
+            margin-top: 1rem;
+        }
         &:hover {
             cursor: pointer;
             box-shadow: #333 1px 2px 2px;
@@ -578,6 +771,10 @@ html {
         font-weight: 600;
         background: #fff;
         border-radius: 6px;
+        @media screen and (max-width: 375px) {
+            width: 80%;
+            margin-bottom: 1rem;
+        }
         &:hover {
             cursor: pointer;
         }
