@@ -8,6 +8,11 @@ export default function AddCard() {
   const { cardSelected } = useSelector((state) => state.cardSelectedReducer);
   const { userLogged } = useSelector((state) => state.userLoggedNow);
 
+  if (localStorage.getItem("user") === null) {
+    alert("Please LogIn");
+    window.location.href = "http://localhost:3000/mtxCards/";
+  }
+
   const userLS = localStorage.getItem("user");
 
   const [card, setCard] = useState({

@@ -1,17 +1,26 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { wallet } from "../redux/actions/post.action";
+import { wallet, cardPrices } from "../redux/actions/post.action";
 
 export default function Index() {
   const { countCards } = useSelector((state) => state.countCardsDB);
+  const { allPricesList } = useSelector((state) => state.allCardPrices);
 
   const dispatch = useDispatch();
   const userInfosLS = JSON.parse(localStorage.getItem("user"));
 
+  if (localStorage.getItem("user") === null) {
+    alert("Please LogIn");
+    window.location.href = "http://localhost:3000/mtxCards/";
+  }
+
   useEffect(() => {
     dispatch(wallet(userInfosLS));
+    dispatch(cardPrices(userInfosLS));
   }, []);
+
+  console.log(allPricesList[0], "allPricesListallPricesListallPricesList");
 
   return (
     <>
@@ -27,7 +36,9 @@ export default function Index() {
             <h2 className="indexHeaderL__titleTwo">
               Number of cards : {countCards[0] === 0 ? "0" : countCards[0]}
             </h2>
-            <h2 className="indexHeaderL__titleTwo">Total value : 12345$</h2>
+            <h2 className="indexHeaderL__titleTwo">
+              Total value : {allPricesList[0] ? allPricesList[0] + " €" : "0 €"}
+            </h2>
           </div>
         </div>
         <div className="indexHeaderR">

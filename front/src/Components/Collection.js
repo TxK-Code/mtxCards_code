@@ -8,6 +8,11 @@ export default function Collection() {
     (state) => state.allCardsSelectedReducer
   );
 
+  if (localStorage.getItem("user") === null) {
+    alert("Please LogIn");
+    window.location.href = "http://localhost:3000/mtxCards/";
+  }
+
   const dispatch = useDispatch();
 
   const userInfosLS = JSON.parse(localStorage.getItem("user"));

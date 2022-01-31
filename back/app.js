@@ -101,6 +101,7 @@ app.post("/api/wallet", (req, res, next) => {
       if (err) {
         throw err;
       }
+      console.log(result[0]);
       res.status(200).json(result[0]);
     }
   );
@@ -228,13 +229,12 @@ app.post("/api/checkLoginInfos", (req, res, next) => {
         throw err;
       }
 
-      // Crypt userId
-      const cryptId = cryptoJS.AES.encrypt(`${result[0].id_User}`, key, {
-        iv: iv,
-      }).toString();
-
       // User found
       if (result[0] && result[0].userName === cryptUserName) {
+        // Crypt userId
+        const cryptId = cryptoJS.AES.encrypt(`${result[0].id_User}`, key, {
+          iv: iv,
+        }).toString();
         // Check password
         bcrypt.compare(
           infosUser.userPassword,
@@ -327,6 +327,67 @@ app.post("/api/addNewUser", (req, res, next) => {
       }
     );
   }
+});
+
+app.post("/api/cardPrices", function (req, res, next) {
+  const cryptUserName = cryptoJS.AES.encrypt(`${req.body.userName}`, key, {
+    iv: iv,
+  }).toString();
+
+  db.query(
+    `SELECT * FROM user WHERE userName = '${cryptUserName}'`,
+    function (err, result) {
+      if (err) {
+        throw err;
+      }
+
+      let listIds = JSON.parse(result[0].userCardList);
+      let arrayIds = `${listIds}`.split(",");
+      let arrayPrices = [];
+
+      arrayIds.forEach((card) => {
+        db.query(
+          `SELECT * FROM card WHERE cardId = '${card}'`,
+          function (err, result) {
+            if (err) {
+              throw err;
+            }
+            arrayPrices.push(parseFloat(result[0].cardPrice));
+
+            if (arrayPrices.length === arrayIds.length) {
+              const reducer = (previousValue, currentValue) =>
+                previousValue + currentValue;
+              console.log(arrayPrices.reduce(reducer));
+              res.status(200).json(arrayPrices.reduce(reducer));
+            }
+          }
+        );
+      });
+    }
+  );
+
+  // const listLength = req.body.length;
+
+  // req.body.forEach((item) => {
+  //   db.query(
+  //     `SELECT * FROM card WHERE cardId = '${item}'`,
+  //     function (err, result) {
+  //       if (err) {
+  //         throw err;
+  //       }
+
+  //       let test = `${result[0].cardPrice}`;
+
+  //       // console.log(test);
+  //       priceArray.push(test);
+
+  //       if (priceArray.length === listLength) {
+  //         console.log(priceArray);
+  //         res.status(200).json(JSON.stringify(priceArray));
+  //       }
+  //     }
+  //   );
+  // });
 });
 
 module.exports = app;

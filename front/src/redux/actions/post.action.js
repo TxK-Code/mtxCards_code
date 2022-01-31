@@ -25,6 +25,18 @@ export const allCards = (props, data) => {
   };
 };
 
+export const cardPrices = (props, data) => {
+  return (dispatch) => {
+    return axios
+      .post("http://localhost:3001/api/cardPrices", props)
+      .then((res) => {
+        console.log(res, "ok");
+        dispatch({ type: "ALL_PRICES", payload: res.data });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
 export const wallet = (props, data) => {
   return (dispatch) => {
     return axios
@@ -33,11 +45,13 @@ export const wallet = (props, data) => {
         if (res.data.userCardList === null) {
           console.log("No cards found");
         } else {
-          const cardsBackend = [res.data.userCardList];
+          const cardsBackend = [JSON.parse(res.data.userCardList)];
           const cardsBackendSplited = `${cardsBackend}`.split(",");
+          let cardsToPrice = [];
           let countCards = 0;
 
           cardsBackendSplited.forEach((card) => {
+            cardsToPrice.push(card);
             countCards += 1;
           });
 
@@ -67,7 +81,7 @@ export const checkLoginInfos = (data) => {
           dispatch({ type: "USER_LOG", payload: res.data });
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert("User Infos not valid"));
   };
 };
 
